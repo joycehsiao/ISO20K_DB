@@ -4,15 +4,64 @@
 
 
 
-var customVal = JSON.parse($("#customInput").attr('data-value'));
+
 console.log("以下是測試html的data value是否可以用JSON格式讀取");
-console.log(customVal);
+//console.log($("#customInput").attr('data-value'));
+var ci_family_nodes = JSON.parse($("#customInput").attr('data-value'));
+console.log(ci_family_nodes.nodes[0].id);
 
-
+//"nodes": [
+//	{
+//		"id": "n0",
+//		"label": "A node",
+//		"x": 0,
+//		"y": 0,
+//		"size": 3
+//	},
+//	{
+//		"id": "n1",
+//		"label": "Another node",
+//		"x": 3,
+//		"y": 1,
+//		"size": 2
+//	},
+//	{
+//		"id": "n2",
+//		"label": "And a last one",
+//		"x": 1,
+//		"y": 3,
+//		"size": 1
+//	}
+//],
+//	"edges": [
+//		{
+//			"id": "e0",
+//			"source": "n0",
+//			"target": "n1"
+//		},
+//		{
+//			"id": "e1",
+//			"source": "n1",
+//			"target": "n2"
+//		},
+//		{
+//			"id": "e2",
+//			"source": "n2",
+//			"target": "n0"
+//		}
+//	] 
+//	}
+function getJsonLength(jsonData) {
+	var jsonLength = 0;
+	for (var item in jsonData) {
+		jsonLength++;
+	}
+	return jsonLength;
+}
 var i,
 	s,
-	N = 5,
-	E = 7,
+	N = getJsonLength(ci_family_nodes.nodes);
+	E = N-2,
 	g = {
 		nodes: [],
 		edges: []
@@ -21,22 +70,29 @@ var i,
 // Generate a random graph:
 for (i = 0; i < N; i++)
 	g.nodes.push({
-		id: 'n' + i,
-		label: 'Node ' + i,
+		id: ci_family_nodes.nodes[i].id,
+		label: ci_family_nodes.nodes[i].label,
 		x: Math.random(),
 		y: Math.random(),
-		size: Math.random(),
-		color: '#666'
+		size:10,
+		color: '#d8f2da'
 	});
+g.edges.push({
+	id: 'e' + i,
+	source: 1,
+	target: 2,
+	size: 20,
+	color: '#d8f2da'
+});
+//for (i = 0; i < E; i++)
+//	g.edges.push({
+//		id: 'e' + i,
+//		source: (Math.random() * N | 0),
+//		target: (Math.random() * N | 0),
+//		size: Math.random(),
+//		color: '#ccc'
+//	});
 
-for (i = 0; i < E; i++)
-	g.edges.push({
-		id: 'e' + i,
-		source: 'n' + (Math.random() * N | 0),
-		target: 'n' + (Math.random() * N | 0),
-		size: Math.random(),
-		color: '#ccc'
-	});
 
 // Instantiate sigma:
 s = new sigma({

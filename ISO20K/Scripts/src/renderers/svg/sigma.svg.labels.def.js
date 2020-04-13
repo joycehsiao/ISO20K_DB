@@ -14,7 +14,7 @@
 
     /**
      * SVG Element creation.
-     *
+     * This label renderer will just display the label on the right of the node.
      * @param  {object}                   node       The node object.
      * @param  {configurable}             settings   The settings function.
      */
@@ -73,7 +73,7 @@
 
       // Showing
       text.style.display = '';
-
+	
       return this;
     }
   };

@@ -1,9 +1,37 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+	<style>
+		#graph-container {
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			position: absolute;
+			background-color: #455660;
+		}
 
+		.sigma-edge {
+			stroke: #14191C;
+		}
+
+		.sigma-node {
+			fill: green;
+			stroke: #14191C;
+			stroke-width: 2px;
+		}
+
+			.sigma-node:hover {
+				fill: blue;
+			}
+
+		.muted {
+			fill-opacity: 0.1;
+			stroke-opacity: 0.1;
+		}
+	</style>
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
+    <h1>Sigma.js視覺圖</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
     <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>

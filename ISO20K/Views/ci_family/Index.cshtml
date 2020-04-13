@@ -12,21 +12,21 @@
 		left: 0;
 		right: 0;
 		position: absolute;
-		background-color: #455660;
+		background-color:#aebea9;
 	}
 
 	.sigma-edge {
-		stroke: #14191C;
+		stroke:  #56435b;
 	}
 
 	.sigma-node {
-		fill: green;
-		stroke: #14191C;
+		fill: #aebea9;
+		stroke: #56435b;
 		stroke-width: 2px;
 	}
 
 		.sigma-node:hover {
-			fill: blue;
+			fill: #625466;
 		}
 
 	.muted {
@@ -38,46 +38,19 @@
 <h2>Index</h2>
 @{
 	var familyItems = ViewBag.items;
+	var sb = ViewBag.sb;
 }
 <p>
 	@Html.ActionLink("Create New", "Create")
-	@for (int i = 0; i < familyItems.Count; i++)
+	@*@for (int i = 0; i < familyItems.Count; i++)
 	{
-		<p>@familyItems[i].family_id  @familyItems[i] : @familyItems[i].name </p>
+	<p>@familyItems[i].family_id  @familyItems[i] : @familyItems[i].name </p>*@
 
-	}
+}
+
 	<!--下面是測試data value是否可傳遞JSON格式給JS-->
-	<input type="hidden" id="customInput" data-value='	 { 
-	"nodes": [ 
-			{ "id": "n0", 
-			"label": "A node", 
-			"x": 0, 
-			"y": 0, 
-			"size": 3 },
-			 { "id": "n1", 
-			"label": "Another node", 
-			"x": 3, 
-			"y": 1,
-			 "size": 2 }, 
-			{ "id": "n2",
-			 "label": "And a last one", 
-			"x": 1, 
-			"y": 3, 
-			"size": 1 } 
-			],
-	"edges": [
-			{ "id": "e0",
-			 "source": "n0", 
-			"target": "n1" },
-			 { "id": "e1",
-			 "source": "n1",
-			 "target": "n2" },
-			 { "id": "e2", 
-			"source": "n2", 
-			"target": "n0" }
-		 ] 
-	}
-'/>
+	
+	<input type="hidden" id="customInput" data-value="@sb" />
 
 
 	<div class="row">
@@ -99,22 +72,22 @@
 
 				@foreach (var item in Model)
 				{
-				<tr>
-					<td>
-						@Html.DisplayFor(modelItem => item.name)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.description)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.sort_order)
-					</td>
-					<td>
-						@Html.ActionLink("Edit", "Edit", new { id = item.family_id }) |
-						@Html.ActionLink("Details", "Details", new { id = item.family_id }) |
-						@Html.ActionLink("Delete", "Delete", new { id = item.family_id })
-					</td>
-				</tr>
+					<tr>
+						<td>
+							@Html.DisplayFor(modelItem => item.name)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.description)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.sort_order)
+						</td>
+						<td>
+							@Html.ActionLink("Edit", "Edit", new { id = item.family_id }) |
+							@Html.ActionLink("Details", "Details", new { id = item.family_id }) |
+							@Html.ActionLink("Delete", "Delete", new { id = item.family_id })
+						</td>
+					</tr>
 				}
 
 			</table>

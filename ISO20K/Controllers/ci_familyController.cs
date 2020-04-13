@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using ISO20K.Models;
@@ -26,9 +27,24 @@ namespace ISO20K.Controllers
 			//string itemJson = JsonConvert.SerializeObject(db.ci_family.ToList());
 			//System.Diagnostics.Debug.WriteLine("以下是測試");
 			//System.Diagnostics.Debug.WriteLine(itemJson);
-
-
-
+			System.Diagnostics.Debug.WriteLine("以下是測試");
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine("{\"nodes\":[");
+			
+			foreach (ISO20K.Models.ci_family i in items) {
+				sb.AppendLine("{\"id\":"+ i.family_id + ",\"label\":"+"\""+i.name+"\",");
+				sb.AppendLine("\"x\":0,\"y\":0,\"size\":2},");
+			}
+			//sb = new StringBuilder(sb.ToString().Substring(0,sb.ToString().Length - 2));//移除最後一個「,」字元
+			string s = sb.ToString();
+			s =s.Substring(0,s.Length - 2);
+			s = s.Remove(s.Length - 1, 1);
+			sb = new StringBuilder(s);
+			sb.AppendLine("]}");
+			string jsonItem = sb.ToString();
+			System.Diagnostics.Debug.WriteLine(sb);
+			ViewBag.sb = jsonItem;
+		
 			return View(db.ci_family.ToList());
 
 
