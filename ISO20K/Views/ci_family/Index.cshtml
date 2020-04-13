@@ -1,0 +1,128 @@
+﻿@model IEnumerable<ISO20K.Models.ci_family>
+
+@{
+	ViewBag.Title = "Index";
+
+
+}
+<style>
+	#graph-container {
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		position: absolute;
+		background-color: #455660;
+	}
+
+	.sigma-edge {
+		stroke: #14191C;
+	}
+
+	.sigma-node {
+		fill: green;
+		stroke: #14191C;
+		stroke-width: 2px;
+	}
+
+		.sigma-node:hover {
+			fill: blue;
+		}
+
+	.muted {
+		fill-opacity: 0.1;
+		stroke-opacity: 0.1;
+	}
+</style>
+
+<h2>Index</h2>
+@{
+	var familyItems = ViewBag.items;
+}
+<p>
+	@Html.ActionLink("Create New", "Create")
+	@for (int i = 0; i < familyItems.Count; i++)
+	{
+		<p>@familyItems[i].family_id  @familyItems[i] : @familyItems[i].name </p>
+
+	}
+	<!--下面是測試data value是否可傳遞JSON格式給JS-->
+	<input type="hidden" id="customInput" data-value='	 { 
+	"nodes": [ 
+			{ "id": "n0", 
+			"label": "A node", 
+			"x": 0, 
+			"y": 0, 
+			"size": 3 },
+			 { "id": "n1", 
+			"label": "Another node", 
+			"x": 3, 
+			"y": 1,
+			 "size": 2 }, 
+			{ "id": "n2",
+			 "label": "And a last one", 
+			"x": 1, 
+			"y": 3, 
+			"size": 1 } 
+			],
+	"edges": [
+			{ "id": "e0",
+			 "source": "n0", 
+			"target": "n1" },
+			 { "id": "e1",
+			 "source": "n1",
+			 "target": "n2" },
+			 { "id": "e2", 
+			"source": "n2", 
+			"target": "n0" }
+		 ] 
+	}
+'/>
+
+
+	<div class="row">
+		<div class="col-lg-12">
+
+			<table class="table">
+				<tr>
+					<th>
+						@Html.DisplayNameFor(model => model.name)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.description)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.sort_order)
+					</th>
+					<th></th>
+				</tr>
+
+				@foreach (var item in Model)
+				{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.name)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.description)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.sort_order)
+					</td>
+					<td>
+						@Html.ActionLink("Edit", "Edit", new { id = item.family_id }) |
+						@Html.ActionLink("Details", "Details", new { id = item.family_id }) |
+						@Html.ActionLink("Delete", "Delete", new { id = item.family_id })
+					</td>
+				</tr>
+				}
+
+			</table>
+		</div>
+
+		<div class="col-lg-8" id="container">
+			<div id="graph-container" style="height:400px"></div>
+		</div>
+	</div>
+
+

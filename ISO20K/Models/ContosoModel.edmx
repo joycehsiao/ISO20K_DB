@@ -1,0 +1,948 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ISO20_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ci">
+          <Key>
+            <PropertyRef Name="ci_id" />
+          </Key>
+          <Property Name="ci_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="parent_id" Type="int" />
+          <Property Name="family_id" Type="int" Nullable="false" />
+          <Property Name="severity_id" Type="int" Nullable="false" />
+          <Property Name="org_id" Type="int" Nullable="false" />
+          <Property Name="site_id" Type="int" />
+          <Property Name="description" Type="varchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="ci_family">
+          <Key>
+            <PropertyRef Name="family_id" />
+          </Key>
+          <Property Name="family_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" />
+          <Property Name="sort_order" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ci_family_application">
+          <Key>
+            <PropertyRef Name="application_id" />
+          </Key>
+          <Property Name="application_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ci_id" Type="int" Nullable="false" />
+          <Property Name="manufacturer" Type="varchar" MaxLength="255" />
+          <Property Name="version" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ci_family_employee">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ci_id" Type="int" Nullable="false" />
+          <Property Name="mobile_number" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ci_family_hardware">
+          <Key>
+            <PropertyRef Name="hardware_id" />
+          </Key>
+          <Property Name="hardware_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ci_id" Type="int" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="2048" />
+          <Property Name="acquisition_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ci_family_service">
+          <Key>
+            <PropertyRef Name="service_id" />
+          </Key>
+          <Property Name="service_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ci_id" Type="int" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="2048" />
+          <Property Name="description" Type="varchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="ci_family_system">
+          <Key>
+            <PropertyRef Name="system_id" />
+          </Key>
+          <Property Name="system_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ci_id" Type="int" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="ci_log">
+          <Key>
+            <PropertyRef Name="cilog_id" />
+          </Key>
+          <Property Name="cilog_id" Type="int" Nullable="false" />
+          <Property Name="ci_id" Type="int" Nullable="false" />
+          <Property Name="opcode_id" Type="tinyint" Nullable="false" />
+          <Property Name="operator_id" Type="int" Nullable="false" />
+          <Property Name="department_id" Type="int" Nullable="false" />
+          <Property Name="opdate" Type="datetime" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="ci_opcode">
+          <Key>
+            <PropertyRef Name="opcode_id" />
+          </Key>
+          <Property Name="opcode_id" Type="tinyint" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="ci_severity">
+          <Key>
+            <PropertyRef Name="severity_id" />
+          </Key>
+          <Property Name="severity_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="255" />
+          <Property Name="sort_order" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="2048" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'ISO20_DB.dbo.operation_privilege' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="operation_privilege">
+          <Key>
+            <PropertyRef Name="operator_id" />
+            <PropertyRef Name="department_id" />
+            <PropertyRef Name="opcode_id" />
+          </Key>
+          <Property Name="operator_id" Type="int" Nullable="false" />
+          <Property Name="department_id" Type="int" Nullable="false" />
+          <Property Name="opcode_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="operator">
+          <Key>
+            <PropertyRef Name="operator_id" />
+          </Key>
+          <Property Name="operator_id" Type="int" Nullable="false" />
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ci_ci_family">
+          <End Role="ci_family" Type="Self.ci_family" Multiplicity="1" />
+          <End Role="ci" Type="Self.ci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci_family">
+              <PropertyRef Name="family_id" />
+            </Principal>
+            <Dependent Role="ci">
+              <PropertyRef Name="family_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_ci_severity">
+          <End Role="ci_severity" Type="Self.ci_severity" Multiplicity="1" />
+          <End Role="ci" Type="Self.ci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci_severity">
+              <PropertyRef Name="severity_id" />
+            </Principal>
+            <Dependent Role="ci">
+              <PropertyRef Name="severity_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_family_application_ci">
+          <End Role="ci" Type="Self.ci" Multiplicity="1" />
+          <End Role="ci_family_application" Type="Self.ci_family_application" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci">
+              <PropertyRef Name="ci_id" />
+            </Principal>
+            <Dependent Role="ci_family_application">
+              <PropertyRef Name="ci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_family_employee_ci">
+          <End Role="ci" Type="Self.ci" Multiplicity="1" />
+          <End Role="ci_family_employee" Type="Self.ci_family_employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci">
+              <PropertyRef Name="ci_id" />
+            </Principal>
+            <Dependent Role="ci_family_employee">
+              <PropertyRef Name="ci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_family_hardware_ci">
+          <End Role="ci" Type="Self.ci" Multiplicity="1" />
+          <End Role="ci_family_hardware" Type="Self.ci_family_hardware" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci">
+              <PropertyRef Name="ci_id" />
+            </Principal>
+            <Dependent Role="ci_family_hardware">
+              <PropertyRef Name="ci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_family_service_ci">
+          <End Role="ci" Type="Self.ci" Multiplicity="1" />
+          <End Role="ci_family_service" Type="Self.ci_family_service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci">
+              <PropertyRef Name="ci_id" />
+            </Principal>
+            <Dependent Role="ci_family_service">
+              <PropertyRef Name="ci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_family_system_ci">
+          <End Role="ci" Type="Self.ci" Multiplicity="1" />
+          <End Role="ci_family_system" Type="Self.ci_family_system" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci">
+              <PropertyRef Name="ci_id" />
+            </Principal>
+            <Dependent Role="ci_family_system">
+              <PropertyRef Name="ci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_log_ci">
+          <End Role="ci" Type="Self.ci" Multiplicity="1" />
+          <End Role="ci_log" Type="Self.ci_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci">
+              <PropertyRef Name="ci_id" />
+            </Principal>
+            <Dependent Role="ci_log">
+              <PropertyRef Name="ci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_log_ci_family_employee1">
+          <End Role="ci_family_employee" Type="Self.ci_family_employee" Multiplicity="1" />
+          <End Role="ci_log" Type="Self.ci_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci_family_employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="ci_log">
+              <PropertyRef Name="operator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_log_ci_opcode">
+          <End Role="ci_opcode" Type="Self.ci_opcode" Multiplicity="1" />
+          <End Role="ci_log" Type="Self.ci_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci_opcode">
+              <PropertyRef Name="opcode_id" />
+            </Principal>
+            <Dependent Role="ci_log">
+              <PropertyRef Name="opcode_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_log_department">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="ci_log" Type="Self.ci_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="ci_log">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_log_operator">
+          <End Role="operator" Type="Self.operator" Multiplicity="1" />
+          <End Role="ci_log" Type="Self.ci_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operator">
+              <PropertyRef Name="operator_id" />
+            </Principal>
+            <Dependent Role="ci_log">
+              <PropertyRef Name="operator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_operation_privilege_operator">
+          <End Role="operator" Type="Self.operator" Multiplicity="1" />
+          <End Role="operation_privilege" Type="Self.operation_privilege" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operator">
+              <PropertyRef Name="operator_id" />
+            </Principal>
+            <Dependent Role="operation_privilege">
+              <PropertyRef Name="operator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_operator_ci_family_employee">
+          <End Role="ci_family_employee" Type="Self.ci_family_employee" Multiplicity="1" />
+          <End Role="operator" Type="Self.operator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci_family_employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="operator">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ISO20_DBModelStoreContainer">
+          <EntitySet Name="ci" EntityType="Self.ci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ci_family" EntityType="Self.ci_family" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ci_family_application" EntityType="Self.ci_family_application" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ci_family_employee" EntityType="Self.ci_family_employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ci_family_hardware" EntityType="Self.ci_family_hardware" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ci_family_service" EntityType="Self.ci_family_service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ci_family_system" EntityType="Self.ci_family_system" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ci_log" EntityType="Self.ci_log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ci_opcode" EntityType="Self.ci_opcode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ci_severity" EntityType="Self.ci_severity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="operator" EntityType="Self.operator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="operation_privilege" EntityType="Self.operation_privilege" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [operation_privilege].[operator_id] AS [operator_id], 
+    [operation_privilege].[department_id] AS [department_id], 
+    [operation_privilege].[opcode_id] AS [opcode_id]
+    FROM [dbo].[operation_privilege] AS [operation_privilege]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_ci_ci_family" Association="Self.FK_ci_ci_family">
+            <End Role="ci_family" EntitySet="ci_family" />
+            <End Role="ci" EntitySet="ci" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_ci_severity" Association="Self.FK_ci_ci_severity">
+            <End Role="ci_severity" EntitySet="ci_severity" />
+            <End Role="ci" EntitySet="ci" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_family_application_ci" Association="Self.FK_ci_family_application_ci">
+            <End Role="ci" EntitySet="ci" />
+            <End Role="ci_family_application" EntitySet="ci_family_application" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_family_employee_ci" Association="Self.FK_ci_family_employee_ci">
+            <End Role="ci" EntitySet="ci" />
+            <End Role="ci_family_employee" EntitySet="ci_family_employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_family_hardware_ci" Association="Self.FK_ci_family_hardware_ci">
+            <End Role="ci" EntitySet="ci" />
+            <End Role="ci_family_hardware" EntitySet="ci_family_hardware" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_family_service_ci" Association="Self.FK_ci_family_service_ci">
+            <End Role="ci" EntitySet="ci" />
+            <End Role="ci_family_service" EntitySet="ci_family_service" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_family_system_ci" Association="Self.FK_ci_family_system_ci">
+            <End Role="ci" EntitySet="ci" />
+            <End Role="ci_family_system" EntitySet="ci_family_system" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_log_ci" Association="Self.FK_ci_log_ci">
+            <End Role="ci" EntitySet="ci" />
+            <End Role="ci_log" EntitySet="ci_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_log_ci_family_employee1" Association="Self.FK_ci_log_ci_family_employee1">
+            <End Role="ci_family_employee" EntitySet="ci_family_employee" />
+            <End Role="ci_log" EntitySet="ci_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_log_ci_opcode" Association="Self.FK_ci_log_ci_opcode">
+            <End Role="ci_opcode" EntitySet="ci_opcode" />
+            <End Role="ci_log" EntitySet="ci_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_log_department" Association="Self.FK_ci_log_department">
+            <End Role="department" EntitySet="department" />
+            <End Role="ci_log" EntitySet="ci_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_log_operator" Association="Self.FK_ci_log_operator">
+            <End Role="operator" EntitySet="operator" />
+            <End Role="ci_log" EntitySet="ci_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_operation_privilege_operator" Association="Self.FK_operation_privilege_operator">
+            <End Role="operator" EntitySet="operator" />
+            <End Role="operation_privilege" EntitySet="operation_privilege" />
+          </AssociationSet>
+          <AssociationSet Name="FK_operator_ci_family_employee" Association="Self.FK_operator_ci_family_employee">
+            <End Role="ci_family_employee" EntitySet="ci_family_employee" />
+            <End Role="operator" EntitySet="operator" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ISO20_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ci">
+          <Key>
+            <PropertyRef Name="ci_id" />
+          </Key>
+          <Property Name="ci_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="parent_id" Type="Int32" />
+          <Property Name="family_id" Type="Int32" Nullable="false" />
+          <Property Name="severity_id" Type="Int32" Nullable="false" />
+          <Property Name="org_id" Type="Int32" Nullable="false" />
+          <Property Name="site_id" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="2048" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ci_family" Relationship="Self.FK_ci_ci_family" FromRole="ci" ToRole="ci_family" />
+          <NavigationProperty Name="ci_severity" Relationship="Self.FK_ci_ci_severity" FromRole="ci" ToRole="ci_severity" />
+          <NavigationProperty Name="ci_family_application" Relationship="Self.FK_ci_family_application_ci" FromRole="ci" ToRole="ci_family_application" />
+          <NavigationProperty Name="ci_family_employee" Relationship="Self.FK_ci_family_employee_ci" FromRole="ci" ToRole="ci_family_employee" />
+          <NavigationProperty Name="ci_family_hardware" Relationship="Self.FK_ci_family_hardware_ci" FromRole="ci" ToRole="ci_family_hardware" />
+          <NavigationProperty Name="ci_family_service" Relationship="Self.FK_ci_family_service_ci" FromRole="ci" ToRole="ci_family_service" />
+          <NavigationProperty Name="ci_family_system" Relationship="Self.FK_ci_family_system_ci" FromRole="ci" ToRole="ci_family_system" />
+          <NavigationProperty Name="ci_log" Relationship="Self.FK_ci_log_ci" FromRole="ci" ToRole="ci_log" />
+        </EntityType>
+        <EntityType Name="ci_family">
+          <Key>
+            <PropertyRef Name="family_id" />
+          </Key>
+          <Property Name="family_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="sort_order" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ci" Relationship="Self.FK_ci_ci_family" FromRole="ci_family" ToRole="ci" />
+        </EntityType>
+        <EntityType Name="ci_family_application">
+          <Key>
+            <PropertyRef Name="application_id" />
+          </Key>
+          <Property Name="application_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ci_id" Type="Int32" Nullable="false" />
+          <Property Name="manufacturer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="version" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ci" Relationship="Self.FK_ci_family_application_ci" FromRole="ci_family_application" ToRole="ci" />
+        </EntityType>
+        <EntityType Name="ci_family_employee">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ci_id" Type="Int32" Nullable="false" />
+          <Property Name="mobile_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ci" Relationship="Self.FK_ci_family_employee_ci" FromRole="ci_family_employee" ToRole="ci" />
+          <NavigationProperty Name="ci_log" Relationship="Self.FK_ci_log_ci_family_employee1" FromRole="ci_family_employee" ToRole="ci_log" />
+          <NavigationProperty Name="operator" Relationship="Self.FK_operator_ci_family_employee" FromRole="ci_family_employee" ToRole="operator" />
+        </EntityType>
+        <EntityType Name="ci_family_hardware">
+          <Key>
+            <PropertyRef Name="hardware_id" />
+          </Key>
+          <Property Name="hardware_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ci_id" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="2048" FixedLength="false" Unicode="false" />
+          <Property Name="acquisition_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ci" Relationship="Self.FK_ci_family_hardware_ci" FromRole="ci_family_hardware" ToRole="ci" />
+        </EntityType>
+        <EntityType Name="ci_family_service">
+          <Key>
+            <PropertyRef Name="service_id" />
+          </Key>
+          <Property Name="service_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ci_id" Type="Int32" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="2048" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="2048" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ci" Relationship="Self.FK_ci_family_service_ci" FromRole="ci_family_service" ToRole="ci" />
+        </EntityType>
+        <EntityType Name="ci_family_system">
+          <Key>
+            <PropertyRef Name="system_id" />
+          </Key>
+          <Property Name="system_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ci_id" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="2048" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ci" Relationship="Self.FK_ci_family_system_ci" FromRole="ci_family_system" ToRole="ci" />
+        </EntityType>
+        <EntityType Name="ci_log">
+          <Key>
+            <PropertyRef Name="cilog_id" />
+          </Key>
+          <Property Name="cilog_id" Type="Int32" Nullable="false" />
+          <Property Name="ci_id" Type="Int32" Nullable="false" />
+          <Property Name="opcode_id" Type="Byte" Nullable="false" />
+          <Property Name="operator_id" Type="Int32" Nullable="false" />
+          <Property Name="department_id" Type="Int32" Nullable="false" />
+          <Property Name="opdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ci" Relationship="Self.FK_ci_log_ci" FromRole="ci_log" ToRole="ci" />
+          <NavigationProperty Name="ci_family_employee" Relationship="Self.FK_ci_log_ci_family_employee1" FromRole="ci_log" ToRole="ci_family_employee" />
+          <NavigationProperty Name="ci_opcode" Relationship="Self.FK_ci_log_ci_opcode" FromRole="ci_log" ToRole="ci_opcode" />
+          <NavigationProperty Name="department" Relationship="Self.FK_ci_log_department" FromRole="ci_log" ToRole="department" />
+          <NavigationProperty Name="operator" Relationship="Self.FK_ci_log_operator" FromRole="ci_log" ToRole="operator" />
+        </EntityType>
+        <EntityType Name="ci_opcode">
+          <Key>
+            <PropertyRef Name="opcode_id" />
+          </Key>
+          <Property Name="opcode_id" Type="Byte" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ci_log" Relationship="Self.FK_ci_log_ci_opcode" FromRole="ci_opcode" ToRole="ci_log" />
+        </EntityType>
+        <EntityType Name="ci_severity">
+          <Key>
+            <PropertyRef Name="severity_id" />
+          </Key>
+          <Property Name="severity_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="sort_order" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ci" Relationship="Self.FK_ci_ci_severity" FromRole="ci_severity" ToRole="ci" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="2048" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ci_log" Relationship="Self.FK_ci_log_department" FromRole="department" ToRole="ci_log" />
+        </EntityType>
+        <EntityType Name="operator">
+          <Key>
+            <PropertyRef Name="operator_id" />
+          </Key>
+          <Property Name="operator_id" Type="Int32" Nullable="false" />
+          <Property Name="employee_id" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ci_family_employee" Relationship="Self.FK_operator_ci_family_employee" FromRole="operator" ToRole="ci_family_employee" />
+          <NavigationProperty Name="ci_log" Relationship="Self.FK_ci_log_operator" FromRole="operator" ToRole="ci_log" />
+          <NavigationProperty Name="operation_privilege" Relationship="Self.FK_operation_privilege_operator" FromRole="operator" ToRole="operation_privilege" />
+        </EntityType>
+        <EntityType Name="operation_privilege">
+          <Key>
+            <PropertyRef Name="operator_id" />
+            <PropertyRef Name="department_id" />
+            <PropertyRef Name="opcode_id" />
+          </Key>
+          <Property Name="operator_id" Type="Int32" Nullable="false" />
+          <Property Name="department_id" Type="Int32" Nullable="false" />
+          <Property Name="opcode_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="operator" Relationship="Self.FK_operation_privilege_operator" FromRole="operation_privilege" ToRole="operator" />
+        </EntityType>
+        <Association Name="FK_ci_ci_family">
+          <End Role="ci_family" Type="Self.ci_family" Multiplicity="1" />
+          <End Role="ci" Type="Self.ci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci_family">
+              <PropertyRef Name="family_id" />
+            </Principal>
+            <Dependent Role="ci">
+              <PropertyRef Name="family_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_ci_severity">
+          <End Role="ci_severity" Type="Self.ci_severity" Multiplicity="1" />
+          <End Role="ci" Type="Self.ci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci_severity">
+              <PropertyRef Name="severity_id" />
+            </Principal>
+            <Dependent Role="ci">
+              <PropertyRef Name="severity_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_family_application_ci">
+          <End Role="ci" Type="Self.ci" Multiplicity="1" />
+          <End Role="ci_family_application" Type="Self.ci_family_application" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci">
+              <PropertyRef Name="ci_id" />
+            </Principal>
+            <Dependent Role="ci_family_application">
+              <PropertyRef Name="ci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_family_employee_ci">
+          <End Role="ci" Type="Self.ci" Multiplicity="1" />
+          <End Role="ci_family_employee" Type="Self.ci_family_employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci">
+              <PropertyRef Name="ci_id" />
+            </Principal>
+            <Dependent Role="ci_family_employee">
+              <PropertyRef Name="ci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_family_hardware_ci">
+          <End Role="ci" Type="Self.ci" Multiplicity="1" />
+          <End Role="ci_family_hardware" Type="Self.ci_family_hardware" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci">
+              <PropertyRef Name="ci_id" />
+            </Principal>
+            <Dependent Role="ci_family_hardware">
+              <PropertyRef Name="ci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_family_service_ci">
+          <End Role="ci" Type="Self.ci" Multiplicity="1" />
+          <End Role="ci_family_service" Type="Self.ci_family_service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci">
+              <PropertyRef Name="ci_id" />
+            </Principal>
+            <Dependent Role="ci_family_service">
+              <PropertyRef Name="ci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_family_system_ci">
+          <End Role="ci" Type="Self.ci" Multiplicity="1" />
+          <End Role="ci_family_system" Type="Self.ci_family_system" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci">
+              <PropertyRef Name="ci_id" />
+            </Principal>
+            <Dependent Role="ci_family_system">
+              <PropertyRef Name="ci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_log_ci">
+          <End Role="ci" Type="Self.ci" Multiplicity="1" />
+          <End Role="ci_log" Type="Self.ci_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci">
+              <PropertyRef Name="ci_id" />
+            </Principal>
+            <Dependent Role="ci_log">
+              <PropertyRef Name="ci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_log_ci_family_employee1">
+          <End Role="ci_family_employee" Type="Self.ci_family_employee" Multiplicity="1" />
+          <End Role="ci_log" Type="Self.ci_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci_family_employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="ci_log">
+              <PropertyRef Name="operator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_operator_ci_family_employee">
+          <End Role="ci_family_employee" Type="Self.ci_family_employee" Multiplicity="1" />
+          <End Role="operator" Type="Self.operator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci_family_employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="operator">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_log_ci_opcode">
+          <End Role="ci_opcode" Type="Self.ci_opcode" Multiplicity="1" />
+          <End Role="ci_log" Type="Self.ci_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ci_opcode">
+              <PropertyRef Name="opcode_id" />
+            </Principal>
+            <Dependent Role="ci_log">
+              <PropertyRef Name="opcode_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_log_department">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="ci_log" Type="Self.ci_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="ci_log">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ci_log_operator">
+          <End Role="operator" Type="Self.operator" Multiplicity="1" />
+          <End Role="ci_log" Type="Self.ci_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operator">
+              <PropertyRef Name="operator_id" />
+            </Principal>
+            <Dependent Role="ci_log">
+              <PropertyRef Name="operator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_operation_privilege_operator">
+          <End Role="operator" Type="Self.operator" Multiplicity="1" />
+          <End Role="operation_privilege" Type="Self.operation_privilege" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operator">
+              <PropertyRef Name="operator_id" />
+            </Principal>
+            <Dependent Role="operation_privilege">
+              <PropertyRef Name="operator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ISO20_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ci" EntityType="Self.ci" />
+          <EntitySet Name="ci_family" EntityType="Self.ci_family" />
+          <EntitySet Name="ci_family_application" EntityType="Self.ci_family_application" />
+          <EntitySet Name="ci_family_employee" EntityType="Self.ci_family_employee" />
+          <EntitySet Name="ci_family_hardware" EntityType="Self.ci_family_hardware" />
+          <EntitySet Name="ci_family_service" EntityType="Self.ci_family_service" />
+          <EntitySet Name="ci_family_system" EntityType="Self.ci_family_system" />
+          <EntitySet Name="ci_log" EntityType="Self.ci_log" />
+          <EntitySet Name="ci_opcode" EntityType="Self.ci_opcode" />
+          <EntitySet Name="ci_severity" EntityType="Self.ci_severity" />
+          <EntitySet Name="department" EntityType="Self.department" />
+          <EntitySet Name="operator" EntityType="Self.operator" />
+          <EntitySet Name="operation_privilege" EntityType="Self.operation_privilege" />
+          <AssociationSet Name="FK_ci_ci_family" Association="Self.FK_ci_ci_family">
+            <End Role="ci_family" EntitySet="ci_family" />
+            <End Role="ci" EntitySet="ci" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_ci_severity" Association="Self.FK_ci_ci_severity">
+            <End Role="ci_severity" EntitySet="ci_severity" />
+            <End Role="ci" EntitySet="ci" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_family_application_ci" Association="Self.FK_ci_family_application_ci">
+            <End Role="ci" EntitySet="ci" />
+            <End Role="ci_family_application" EntitySet="ci_family_application" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_family_employee_ci" Association="Self.FK_ci_family_employee_ci">
+            <End Role="ci" EntitySet="ci" />
+            <End Role="ci_family_employee" EntitySet="ci_family_employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_family_hardware_ci" Association="Self.FK_ci_family_hardware_ci">
+            <End Role="ci" EntitySet="ci" />
+            <End Role="ci_family_hardware" EntitySet="ci_family_hardware" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_family_service_ci" Association="Self.FK_ci_family_service_ci">
+            <End Role="ci" EntitySet="ci" />
+            <End Role="ci_family_service" EntitySet="ci_family_service" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_family_system_ci" Association="Self.FK_ci_family_system_ci">
+            <End Role="ci" EntitySet="ci" />
+            <End Role="ci_family_system" EntitySet="ci_family_system" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_log_ci" Association="Self.FK_ci_log_ci">
+            <End Role="ci" EntitySet="ci" />
+            <End Role="ci_log" EntitySet="ci_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_log_ci_family_employee1" Association="Self.FK_ci_log_ci_family_employee1">
+            <End Role="ci_family_employee" EntitySet="ci_family_employee" />
+            <End Role="ci_log" EntitySet="ci_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_operator_ci_family_employee" Association="Self.FK_operator_ci_family_employee">
+            <End Role="ci_family_employee" EntitySet="ci_family_employee" />
+            <End Role="operator" EntitySet="operator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_log_ci_opcode" Association="Self.FK_ci_log_ci_opcode">
+            <End Role="ci_opcode" EntitySet="ci_opcode" />
+            <End Role="ci_log" EntitySet="ci_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_log_department" Association="Self.FK_ci_log_department">
+            <End Role="department" EntitySet="department" />
+            <End Role="ci_log" EntitySet="ci_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ci_log_operator" Association="Self.FK_ci_log_operator">
+            <End Role="operator" EntitySet="operator" />
+            <End Role="ci_log" EntitySet="ci_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_operation_privilege_operator" Association="Self.FK_operation_privilege_operator">
+            <End Role="operator" EntitySet="operator" />
+            <End Role="operation_privilege" EntitySet="operation_privilege" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ISO20_DBModelStoreContainer" CdmEntityContainer="ISO20_DBEntities">
+          <EntitySetMapping Name="ci">
+            <EntityTypeMapping TypeName="ISO20_DBModel.ci">
+              <MappingFragment StoreEntitySet="ci">
+                <ScalarProperty Name="ci_id" ColumnName="ci_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
+                <ScalarProperty Name="family_id" ColumnName="family_id" />
+                <ScalarProperty Name="severity_id" ColumnName="severity_id" />
+                <ScalarProperty Name="org_id" ColumnName="org_id" />
+                <ScalarProperty Name="site_id" ColumnName="site_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ci_family">
+            <EntityTypeMapping TypeName="ISO20_DBModel.ci_family">
+              <MappingFragment StoreEntitySet="ci_family">
+                <ScalarProperty Name="family_id" ColumnName="family_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="sort_order" ColumnName="sort_order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ci_family_application">
+            <EntityTypeMapping TypeName="ISO20_DBModel.ci_family_application">
+              <MappingFragment StoreEntitySet="ci_family_application">
+                <ScalarProperty Name="application_id" ColumnName="application_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ci_id" ColumnName="ci_id" />
+                <ScalarProperty Name="manufacturer" ColumnName="manufacturer" />
+                <ScalarProperty Name="version" ColumnName="version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ci_family_employee">
+            <EntityTypeMapping TypeName="ISO20_DBModel.ci_family_employee">
+              <MappingFragment StoreEntitySet="ci_family_employee">
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ci_id" ColumnName="ci_id" />
+                <ScalarProperty Name="mobile_number" ColumnName="mobile_number" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ci_family_hardware">
+            <EntityTypeMapping TypeName="ISO20_DBModel.ci_family_hardware">
+              <MappingFragment StoreEntitySet="ci_family_hardware">
+                <ScalarProperty Name="hardware_id" ColumnName="hardware_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ci_id" ColumnName="ci_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="acquisition_date" ColumnName="acquisition_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ci_family_service">
+            <EntityTypeMapping TypeName="ISO20_DBModel.ci_family_service">
+              <MappingFragment StoreEntitySet="ci_family_service">
+                <ScalarProperty Name="service_id" ColumnName="service_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ci_id" ColumnName="ci_id" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ci_family_system">
+            <EntityTypeMapping TypeName="ISO20_DBModel.ci_family_system">
+              <MappingFragment StoreEntitySet="ci_family_system">
+                <ScalarProperty Name="system_id" ColumnName="system_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ci_id" ColumnName="ci_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ci_log">
+            <EntityTypeMapping TypeName="ISO20_DBModel.ci_log">
+              <MappingFragment StoreEntitySet="ci_log">
+                <ScalarProperty Name="cilog_id" ColumnName="cilog_id" />
+                <ScalarProperty Name="ci_id" ColumnName="ci_id" />
+                <ScalarProperty Name="opcode_id" ColumnName="opcode_id" />
+                <ScalarProperty Name="operator_id" ColumnName="operator_id" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="opdate" ColumnName="opdate" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ci_opcode">
+            <EntityTypeMapping TypeName="ISO20_DBModel.ci_opcode">
+              <MappingFragment StoreEntitySet="ci_opcode">
+                <ScalarProperty Name="opcode_id" ColumnName="opcode_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ci_severity">
+            <EntityTypeMapping TypeName="ISO20_DBModel.ci_severity">
+              <MappingFragment StoreEntitySet="ci_severity">
+                <ScalarProperty Name="severity_id" ColumnName="severity_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="sort_order" ColumnName="sort_order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="department">
+            <EntityTypeMapping TypeName="ISO20_DBModel.department">
+              <MappingFragment StoreEntitySet="department">
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="operator">
+            <EntityTypeMapping TypeName="ISO20_DBModel.operator">
+              <MappingFragment StoreEntitySet="operator">
+                <ScalarProperty Name="operator_id" ColumnName="operator_id" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="operation_privilege">
+            <EntityTypeMapping TypeName="ISO20_DBModel.operation_privilege">
+              <MappingFragment StoreEntitySet="operation_privilege">
+                <ScalarProperty Name="operator_id" ColumnName="operator_id" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="opcode_id" ColumnName="opcode_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

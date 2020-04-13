@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c83e990621c04997bf70190ed68975f8" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="ISO20_DBModel.ci" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISO20_DBModel.ci_family" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISO20_DBModel.ci_family_application" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISO20_DBModel.ci_family_employee" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISO20_DBModel.ci_family_hardware" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISO20_DBModel.ci_family_service" Width="1.5" PointX="5.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISO20_DBModel.ci_family_system" Width="1.5" PointX="5.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISO20_DBModel.ci_log" Width="1.5" PointX="9.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISO20_DBModel.ci_opcode" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISO20_DBModel.ci_severity" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISO20_DBModel.department" Width="1.5" PointX="7.5" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISO20_DBModel.operator" Width="1.5" PointX="7.5" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISO20_DBModel.operation_privilege" Width="1.5" PointX="9.75" PointY="10.75" IsExpanded="true" />
+        <AssociationConnector Association="ISO20_DBModel.FK_ci_ci_family" ManuallyRouted="false" />
+        <AssociationConnector Association="ISO20_DBModel.FK_ci_ci_severity" ManuallyRouted="false" />
+        <AssociationConnector Association="ISO20_DBModel.FK_ci_family_application_ci" ManuallyRouted="false" />
+        <AssociationConnector Association="ISO20_DBModel.FK_ci_family_employee_ci" ManuallyRouted="false" />
+        <AssociationConnector Association="ISO20_DBModel.FK_ci_family_hardware_ci" ManuallyRouted="false" />
+        <AssociationConnector Association="ISO20_DBModel.FK_ci_family_service_ci" ManuallyRouted="false" />
+        <AssociationConnector Association="ISO20_DBModel.FK_ci_family_system_ci" ManuallyRouted="false" />
+        <AssociationConnector Association="ISO20_DBModel.FK_ci_log_ci" ManuallyRouted="false" />
+        <AssociationConnector Association="ISO20_DBModel.FK_ci_log_ci_family_employee1" ManuallyRouted="false" />
+        <AssociationConnector Association="ISO20_DBModel.FK_operator_ci_family_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="ISO20_DBModel.FK_ci_log_ci_opcode" ManuallyRouted="false" />
+        <AssociationConnector Association="ISO20_DBModel.FK_ci_log_department" ManuallyRouted="false" />
+        <AssociationConnector Association="ISO20_DBModel.FK_ci_log_operator" ManuallyRouted="false" />
+        <AssociationConnector Association="ISO20_DBModel.FK_operation_privilege_operator" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
