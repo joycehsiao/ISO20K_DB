@@ -44,7 +44,18 @@ namespace ISO20K.Controllers
 			string jsonItem = sb.ToString();
 			System.Diagnostics.Debug.WriteLine(sb);
 			ViewBag.sb = jsonItem;
-		
+
+			List<SelectListItem> source_items = new List<SelectListItem>();
+			foreach (var i in items) {
+				source_items.Add(new SelectListItem()
+				{
+					Text = i.name,
+					Value = i.family_id.ToString()
+				});
+			}
+			
+			ViewBag.sourceItem = source_items;
+			ViewBag.targetItem = source_items;
 			return View(db.ci_family.ToList());
 
 

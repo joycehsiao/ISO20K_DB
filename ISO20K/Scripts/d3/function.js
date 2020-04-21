@@ -486,3 +486,21 @@ function dragged(d) {
 	d.fx = d3.event.x;
 	d.fy = d3.event.y;
 }
+
+function getRelation () {
+	var form = document.getElementById("relation");
+	var user_source = form.source.value;
+	var user_target = form.target.value;
+	var user_type = form.type.value;
+	setLink(user_source, user_target, user_type)
+}
+
+function setLink(src, tar, tp){
+	json2.links.push({
+		source: src,
+		target: tar,
+		type:tp
+	})
+	alert(json2);
+	update(json2.links, ci_family_nodes.nodes)
+}
