@@ -8,8 +8,8 @@
 	@Scripts.Render("~/bundles/jquery")
 	@Styles.Render("~/Content/css")
 	@Scripts.Render("~/bundles/modernizr")
-	@Scripts.Render("~/bundles/src");
-	@Scripts.Render("~/bundles/plugins");
+	@*@Scripts.Render("~/bundles/src");*@
+	@Scripts.Render("~/bundles/plugins")
 	
 </head>
 <body>
@@ -43,6 +43,7 @@
 
 	@Scripts.Render("~/bundles/bootstrap")
 	@Scripts.Render("~/bundles/sigma")
+	@Scripts.Render("~/bundles/d3");
 	@RenderSection("scripts", required: false)
 </body>
 </html>

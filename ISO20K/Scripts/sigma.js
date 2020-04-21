@@ -5,10 +5,10 @@
 
 
 
-console.log("以下是測試html的data value是否可以用JSON格式讀取");
+//console.log("以下是測試html的data value是否可以用JSON格式讀取");
 //console.log($("#customInput").attr('data-value'));
 var ci_family_nodes = JSON.parse($("#customInput").attr('data-value'));
-console.log(ci_family_nodes.nodes[0].id);
+//console.log(ci_family_nodes.nodes[0].id);
 
 //"nodes": [
 //	{
@@ -74,16 +74,22 @@ for (i = 0; i < N; i++)
 		label: ci_family_nodes.nodes[i].label,
 		x: Math.random(),
 		y: Math.random(),
-		size:10,
+		size: getJsonLength(ci_family_nodes.nodes[i]),
 		color: '#d8f2da'
 	});
 g.edges.push({
-	id: 'e' + i,
+	id: 'e' + 1,
 	source: 1,
 	target: 2,
 	size: 20,
 	color: '#d8f2da'
-});
+}, {
+		id: 'e' + 2,
+		source: 3,
+		target: 4,
+		size: 20,
+		color: '#d8f2da'}
+);
 //for (i = 0; i < E; i++)
 //	g.edges.push({
 //		id: 'e' + i,

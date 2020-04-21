@@ -51,8 +51,13 @@ namespace ISO20K
                       "~/Content/site.css"));
 			bundles.Add(new ScriptBundle("~/bundles/sigma").Include(
 						"~/Scripts/sigma.js"));
+			bundles.Add(new ScriptBundle("~/bundles/d3").Include(
+						"~/Scripts/d3/d3.min.js", 
+						"~/Scripts/d3/d3.v4.min.js", 
+						"~/Scripts/d3/d3-selection-multi.v1.js",
+						"~/Scripts/d3/function.js"
+						));
 
-					
 
 		}
     }

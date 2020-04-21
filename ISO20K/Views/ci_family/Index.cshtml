@@ -2,8 +2,6 @@
 
 @{
 	ViewBag.Title = "Index";
-
-
 }
 <style>
 	#graph-container {
@@ -34,7 +32,16 @@
 		stroke-opacity: 0.1;
 	}
 </style>
+<style type="text/css">
+	.node {
+	}
 
+	.link {
+		stroke: #999;
+		stroke-opacity: .6;
+		stroke-width: 1px;
+	}
+</style>
 <h2>Index</h2>
 @{
 	var familyItems = ViewBag.items;
@@ -43,15 +50,15 @@
 <p>
 	@Html.ActionLink("Create New", "Create")
 	@*@for (int i = 0; i < familyItems.Count; i++)
-	{
-	<p>@familyItems[i].family_id  @familyItems[i] : @familyItems[i].name </p>*@
+		{
+		<p>@familyItems[i].family_id  @familyItems[i] : @familyItems[i].name </p>*@
 
-}
+	
 
 	<!--下面是測試data value是否可傳遞JSON格式給JS-->
-	
-	<input type="hidden" id="customInput" data-value="@sb" />
 
+	<input type="hidden" id="customInput" data-value="@sb" />
+	
 
 	<div class="row">
 		<div class="col-lg-12">
@@ -93,9 +100,36 @@
 			</table>
 		</div>
 
-		<div class="col-lg-8" id="container">
-			<div id="graph-container" style="height:400px"></div>
+		<div class="col-lg-12">
+			<h2>D3</h2>
+
+			<select id="source">
+				<option value="#">source</option>
+				<option value=1>sort_order 1</option>
+				<option value=2>sort_order 2</option>
+				<option value=3>sort_order 3</option>
+				<option value=4>sort_order 4</option>
+			</select>
+			<select id="target">
+				<option value="#">target</option>
+				<option value=1>sort_order 1</option>
+				<option value=2>sort_order 2</option>
+				<option value=3>sort_order 3</option>
+				<option value=4>sort_order 4</option>
+			</select>
+			<select id="type">
+				<option value="#">type</option>
+				<option value="is_a">IS_A</option>
+				<option value="has">has</option>
+			</select>
+			<svg id="test3"></svg>
 		</div>
+
+		<!--
+
+	<div class="col-lg-8" id="container">
+				<div id="graph-container" style="height:400px"></div>
+			</div>  -->
 	</div>
 
 

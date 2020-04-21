@@ -32,8 +32,8 @@ namespace ISO20K.Controllers
 			sb.AppendLine("{\"nodes\":[");
 			
 			foreach (ISO20K.Models.ci_family i in items) {
-				sb.AppendLine("{\"id\":"+ i.family_id + ",\"label\":"+"\""+i.name+"\",");
-				sb.AppendLine("\"x\":0,\"y\":0,\"size\":2},");
+				sb.AppendLine("{\"id\":"+ i.family_id + ",\"name\":"+"\""+i.name+"\",");
+				sb.AppendLine("\"description\":\""+i.description+"\"},");
 			}
 			//sb = new StringBuilder(sb.ToString().Substring(0,sb.ToString().Length - 2));//移除最後一個「,」字元
 			string s = sb.ToString();
