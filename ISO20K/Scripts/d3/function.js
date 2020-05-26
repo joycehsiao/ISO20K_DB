@@ -5,10 +5,7 @@
 
 
 var ci_family_nodes = JSON.parse($("#customInput").attr('data-value'));
-
-//d3_2
 var colors = d3.scaleOrdinal(d3.schemeCategory10);
-
 var svg = d3.select("#test2"),
 	width = +svg.attr("width"),
 	height = +svg.attr("height"),
@@ -96,7 +93,7 @@ function update(links, nodes) {
 		.attrs({
 			'class': 'edgelabel',
 			'id': function (d, i) { return 'edgelabel' + i },
-			'font-size': 13,
+			'font-size': 10,
 			'fill': '#aaa'
 		});
 
@@ -104,7 +101,7 @@ function update(links, nodes) {
 		.attr('xlink:href', function (d, i) { return '#edgepath' + i })
 		.style("text-anchor", "middle")
 		.style("pointer-events", "none")
-		.attr("startOffset", "60%")
+		.attr("startOffset", "50%")
 		.text(function (d) { return d.type });
 
 	node = svg.selectAll(".node")
@@ -119,15 +116,14 @@ function update(links, nodes) {
 		);
 
 	node.append("circle")
-		.attr("r", 13)
+		.attr("r", 50)//設定圈圈半徑
 		.style("fill", function (d, i) { return colors(i); })
 
 	node.append("title")
 		.text(function (d) { return d.id; });
 
 	node.append("text")
-		.attr("dy", -15)
-		.style("font-size", "20px")
+		.attr("dy", -55)//node的文字的偏移量
 		.text(function (d) { return d.name + ":" + d.label; });
 
 	simulation
@@ -142,14 +138,14 @@ function ticked() {
 	link
 		.attr("x1", function (d) { return d.source.x; })
 		.attr("y1", function (d) { return d.source.y; })
-		.attr("x2", function (d) { return d.target.x+7; })
-		.attr("y2", function (d) { return d.target.y+7; });
+		.attr("x2", function (d) { return d.target.x+30; })//link箭頭和node中的距離設定
+		.attr("y2", function (d) { return d.target.y + 30; });//link箭頭和node中的距離設定
 
 	node
 		.attr("transform", function (d) { return "translate(" + d.x + ", " + d.y + ")"; });
 
 	edgepaths.attr('d', function (d) {
-		return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x-7 + ' ' + d.target.y-7;
+		return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
 	});
 
 	edgelabels.attr('transform', function (d) {
