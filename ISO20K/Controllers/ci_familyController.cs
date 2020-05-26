@@ -21,13 +21,8 @@ namespace ISO20K.Controllers
 		{			
 			List<ci_family> items = new List<ci_family>();
 			items = db.ci_family.ToList();
-			//嘗試利用ViewBag將model資料丟到前端，html可以讀但是JS檔無法，所以要透過HTML 的data value讓JS讀取，所以要將資料庫資料先轉成JSON格式字串，用ViewBag,data value傳給JS
+			//利用ViewBag將model資料丟到前端，html可以讀但是JS檔無法，所以要透過HTML 的data value讓JS讀取，所以要將資料庫資料先轉成JSON格式字串，用ViewBag,data value傳給JS
 			ViewBag.items = items;
-			//下列JOSN嘗試沒成功
-			//string itemJson = JsonConvert.SerializeObject(db.ci_family.ToList());
-			//System.Diagnostics.Debug.WriteLine("以下是測試");
-			//System.Diagnostics.Debug.WriteLine(itemJson);
-			System.Diagnostics.Debug.WriteLine("以下是測試");
 			StringBuilder sb = new StringBuilder();
 			sb.AppendLine("{\"nodes\":[");
 			
@@ -35,14 +30,14 @@ namespace ISO20K.Controllers
 				sb.AppendLine("{\"id\":"+ i.family_id + ",\"name\":"+"\""+i.name+"\",");
 				sb.AppendLine("\"label\":\""+i.description+"\"},");
 			}
-			//sb = new StringBuilder(sb.ToString().Substring(0,sb.ToString().Length - 2));//移除最後一個「,」字元
+			
 			string s = sb.ToString();
 			s =s.Substring(0,s.Length - 2);
 			s = s.Remove(s.Length - 1, 1);
 			sb = new StringBuilder(s);
 			sb.AppendLine("]}");
 			string jsonItem = sb.ToString();
-			System.Diagnostics.Debug.WriteLine(sb);
+			
 			ViewBag.sb = jsonItem;
 
 			List<SelectListItem> source_items = new List<SelectListItem>();

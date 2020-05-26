@@ -20,37 +20,12 @@ namespace ISO20K
                         "~/Scripts/modernizr-*"));
 
 
-			bundles.Add(new ScriptBundle("~/bundles/src").Include(
-					  "~/Scripts/src/sigma.core.js",
-					  "~/Scripts/src/conrad.js",
-					  "~/Scripts/src/utils/sigma.*",
-					  "~/Scripts/src/sigma.settings.js",
-					  "~/Scripts/src/sigma.core.js",
-					  "~/Scripts/src/sigma.core.js",
-					  
-					  "~/Scripts/src/renderers/sigma.*",
-					  "~/Scripts/src/renderers/canvas/sigma.*",
-					  "~/Scripts/src/renderers/svg/sigma.*",
-					  "~/Scripts/src/renderers/webgl/sigma.*",
-					  "~/Scripts/src/misc/sigma.*",
-					  "~/Scripts/src/middlewares/sigma.*",
-					  "~/Scripts/src/classes/sigma.*",
-					  "~/Scripts/src/captors/sigma.*"));
-
-			bundles.Add(new ScriptBundle("~/bundles/plugins").Include(
-					  "~/Scripts/plugins/sigma.plugins.neighborhoods/sigma.plugins.neighborhoods.js",
-					  "~/Scripts/plugins/sigma.layout.forceAtlas2/supervisor.js",
-					  "~/Scripts/plugins/igma.layout.forceAtlas2/worker.js",
-					  "~/Scripts/plugins/sigma.parsers.json/sigma.parsers.json.js"));
-
 			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
-			bundles.Add(new ScriptBundle("~/bundles/sigma").Include(
-						"~/Scripts/sigma.js"));
 			bundles.Add(new ScriptBundle("~/bundles/d3").Include(
 						"~/Scripts/d3/d3.min.js", 
 						"~/Scripts/d3/d3.v4.min.js", 

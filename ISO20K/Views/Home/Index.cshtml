@@ -31,20 +31,20 @@
 		}
 	</style>
 <div class="jumbotron">
-    <h1>Sigma.js視覺圖</h1>
+    <h1>資料視覺圖</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+  
 </div>
 
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        @Html.ActionLink("第一個參數是顯示在連結中的文字", "Index", "ci_family");
+		<p>
+			view : views/ci_family/Index.cshtml
+			controller : controllers/ci_familyController
+			JS:Scripts/d3/function.js
+		</p>
+        @Html.ActionLink("點擊查看Ci_family範例", "Index", "ci_family");
         <!--第二個參數是動作，第三個是控制器名稱-->
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
